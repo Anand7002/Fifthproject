@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather_app</title>
+    <link rel="stylesheet" href="weather.css">
+</head>
+<body>
+    <div class="a">
+        <h1>Find your weather</h1>
+        <header>
+            <label>City:</label>
+            <input type="text" placeholder="Entry a city" id="search" style="height: 30px; width: 250px;">
+        </header>
+        <main>
+            <div id="city"></div>
+            <div id="date"></div>
+            <div id="temp"></div>
+            <div id="info"></div>
+        </main>
+    </div>
+    
+
+
+    <script>
+        const api={
+            key:"df0e5c5864ab47d89949964ece02863e",
+            base:'https://api.openweathermap.org/data/2.5/'
+        }
+
+        function getData(query){
+            fetch(`${api.base}weather?q=${query}&units=metric&appid=${api.key}`)
+            .then(response => response.json())
+            .then(display)
+        }
+
+        const searchbox=document.getElementById('search')
+        searchbox.addEventListener('keypress',setQuery)
+
+        function setQuery(e){
+            if(e.code === "Enter"){
+                getData(searchbox.value)
+            }
+        }
+
+        function display(weather){
+            let city=document.getElementById('city')
+            city.innerText=`${weather.name},${weather.sys.country}`
+            
+            let x= new Date()
+            let date=document.getElementById('date');
+            date.innerText=x
+
+            let tem=document.getElementById('temp')
+            temp.innerText=`${Math.round(weather.main.temp)}°c` 
+
+            let info=document.getElementById('info')
+            info.innerText=weather.weather[0].main
+        }
+
+
+
+    </script>
+</body>
+</html>
